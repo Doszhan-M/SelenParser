@@ -59,7 +59,7 @@ def start():
 
     result = {}
     for key in temp_dict.keys():
-        result[key] = []
+        result[key] = {}
 
     temp_list = []
     for key in result.keys():
@@ -67,12 +67,11 @@ def start():
             columns = clear_rows[temp_dict[key]].find_elements(By.TAG_NAME, "td")
             temp_dict[key] = temp_dict[key] - 1
             if len(columns) == 2 and columns not in temp_list:
-                result[key].append({columns[0].text: columns[-1].text})
+                result[key].update({columns[0].text: columns[-1].text})
                 temp_list.append(columns)
 
     for row in rows:
         className = row.get_attribute("class")
-        print(className)
         if className == 'head item-info-table':
             break
         columns = row.find_elements(By.TAG_NAME, "td")
