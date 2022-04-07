@@ -1,0 +1,25 @@
+{
+    // - - - Настройки pythonPath - - - - - - - - - - 
+    "python.defaultInterpreterPath": "./venv/bin/python",
+
+    // - - - Настройки importPath - - - - - - - - - - 
+    "python.analysis.extraPaths": [
+    ],
+
+    // - - - Настройки autopep8 - - - - - - - - - - 
+    "python.formatting.provider": "autopep8",
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "100",
+        "--experimental"
+    ],
+  
+    "editor.snippetSuggestions": "top",
+    
+    // - - - Настройки cSpell - - - - - - - - - - - - -
+    "cSpell.language": "en,ru",
+    "cSpell.ignoreWords": [
+      "unvisible_rows",
+      
+    ],
+  }
