@@ -10,13 +10,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 chrome_options = Options()
-# chrome_options.add_argument("--headless") # headless mode. Comment this line for interactive debugging
-# suggested options. Good for containers. Not so for macs
-# chrome_options.add_argument("--headless")
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_experimental_option('prefs', {
-    # Change default directory for downloads
     "download.default_directory": os.path.abspath(os.getcwd()),
     "download.prompt_for_download": False,  # To auto download the file
     "download.directory_upgrade": True,
@@ -30,9 +26,6 @@ wait = WebDriverWait(driver, 5)  # create a wait object. Will raise exception af
 
 def start():
     driver.get(f"file:///home/lenovo/Документы/kol.kz/page.html")
-    # wait.until(EC.presence_of_element_located(
-    #     (By.XPATH, "/html/body/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/table")))
-
     table = driver.find_element(
         By.XPATH, "/html/body/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/table")
     rows = table.find_elements(By.TAG_NAME, "tr")
@@ -70,41 +63,20 @@ def start():
                 result[key].update({columns[0].text: columns[-1].text})
                 temp_list.append(columns)
 
-    for row in rows:
-        className = row.get_attribute("class")
-        if className == 'head item-info-table':
-            break
-        columns = row.find_elements(By.TAG_NAME, "td")
-        if len(columns) == 2:
-            result.update({columns[0].text: columns[-1].text})
+    print(temp_dict)
 
-    print(result)
+
+a = {
+    'Основания для включения НП в Список налогоплательщиков, отсутствующих по юридическому адресу':
+    {'Дата акта обследования': '2022-03-30', 'Номер акта обследования': '2388'},
+    
+    'Основания для включения НП в Список ЮЛ, имеющих задолженность более 150 МРП (07.02.2022)':
+    {'Штраф, тенге': '0,00', 'Пени, тенге': '777 228 052,82',
+     'Сумма основного долга, тенге': '4 312 358 535,00',
+     'Общая сумма налоговой задолженности, не погашенная по истечении 4 месяцев со дня её возникновения':
+     '5 089 586 587,82'}
+    }
 
 
 start()
 driver.quit()
-
-
-a = {
-    'Основания для включения НП в Список налогоплательщиков, признанных банкротами':
-    [{'Дата решения суда': ''},
-     {
-        'Номер решения суда':
-        'Решение СМЭС г.Алматы №7527-21-00-2/10685 30 ноября 2021 года с/з отдел взимание № -019090202005/018-вн от 11.01.2022'}],
-    'Основания для включения НП в Список ЮЛ, имеющих задолженность более 150 МРП (07.02.2022)':
-    [{'Штраф, тенге': '27 170 431,00'},
-     {'Пени, тенге': '2 904 485 300,01'},
-     {'Сумма основного долга, тенге': '5 570 969 775,51'},
-     {
-        'Общая сумма налоговой задолженности, не погашенная по истечении 4 месяцев со дня её возникновения':
-        '8 502 625 506,52'}],
-    
-    'Наименование/ФИО налогоплательщика': 'Товарищество с ограниченной ответственностью "НЕМОС"',
-    'ИИН/БИН': '160540019486', 
-    'РНН': '600700743175',
-    'Фамилия, имя, отчество руководителя': 'ГУРЬЕВ СЕРГЕЙ ГЕННАДЬЕВИЧ',
-    
-    'ИИН руководителя': '580111301922', 
-    'РНН руководителя': '600810271319',
-    'Код в стране инкорпорации руководителя': ''
-    }
